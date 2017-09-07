@@ -51,7 +51,8 @@ namespace AtisWebServiceTest
                 {
                     new EnrollmentUpdate()
                     {
-                        EDIPI = "1191171280",
+                       StatusUpdateID = 1234,
+                        EDIPI = "1111111111",
                         SchoolYear = "2015",
                         School = "704W",
                         CourseId = "1-250-C62",
@@ -91,34 +92,35 @@ namespace AtisWebServiceTest
                     //    ReasonCode = "DW"                        
                     //}
 
-                    new EnrollmentUpdate()
-                    {
-                        EDIPI = "1237665500",
-                        SchoolYear = "2015",
-                        School = "704W",
-                        CourseId = "1-250-C60",
-                        ClassId = "007",                        
-                        Phase = "2",
-                        StatusCode = "G",
-                        StatusType = "3",
-                        StatusDate = "2015-03-25",
-                        TrackingID = "123321"
-                        //ReasonCode = "G"
+                    //new EnrollmentUpdate()
+                    //{
+                    //    EDIPI = "1237665500",
+                    //    SchoolYear = "2015",
+                    //    School = "704W",
+                    //    CourseId = "1-250-C60",
+                    //    ClassId = "007",                        
+                    //    Phase = "2",
+                    //    StatusCode = "G",
+                    //    StatusType = "3",
+                    //    StatusDate = "2015-03-25",
+                    //    TrackingID = "123321"
+                    //    //ReasonCode = "G"
                         
-                    },
+                    //},
                     new EnrollmentUpdate()
                     {
-                        EDIPI = "1237665500",
-                        SchoolYear = "2015",
+                        StatusUpdateID = 1234,
+                        EDIPI = "111111111",
+                        SchoolYear = "2017",
                         School = "704W",
-                        CourseId = "1-250-C60",
-                        ClassId = "007",                        
-                        Phase = "2",
-                        StatusCode = "G",
+                        CourseId = "1-250-C60 (DL) (PI)",
+                        ClassId = "001",                        
+                        //Phase = "1",
+                        StatusCode = "Z",
                         StatusType = "3",
-                        StatusDate = "2015-03-25",
-                        TrackingID = "1039"
-                        //ReasonCode = "G"
+                        StatusDate = "2017-2-7",
+                        TrackingID = "150526",
+                        ReasonCode = "HZ"
                         
                     }
                 };
@@ -139,7 +141,7 @@ namespace AtisWebServiceTest
                 else if (cmbType.SelectedIndex == 4)
                 {
                     //bool enrollmentStatus = await req.VerifyEnrollment("1-250-C60", "1237665500", "007");
-                    bool enrollmentStatus = await req.VerifyEnrollment("1-250-C61", "1013508638", "2016");
+                    bool enrollmentStatus = await req.VerifyEnrollment("1-250-C60 (DL) (PI)", txtCustomUri.Text, "2017");
                     txtJson.Text = enrollmentStatus.ToString();
                 }
                 //Get class ID for enrollment

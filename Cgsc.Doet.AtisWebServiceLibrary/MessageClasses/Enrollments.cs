@@ -21,6 +21,7 @@ namespace Cgsc.Doet.AtisWebServiceLibrary.MessageClasses
     [DataContract]
     public class EnrollmentUpdate : IAtisMessage
     {
+        public int StatusUpdateID { get; set; }
         [DataMember(Name = "cls", IsRequired=false, EmitDefaultValue=false)]
         public string ClassId { get; set; }
         [DataMember(Name = "crs", IsRequired=false, EmitDefaultValue=false)]

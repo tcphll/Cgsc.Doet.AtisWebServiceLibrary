@@ -22,6 +22,8 @@ namespace Cgsc.Doet.AtisWebServiceLibrary.MessageClasses
         public string ResponseCode { get; set; }
         [DataMember(Name = "processCd")]
         public string ProcessCode { get; set; }
+        [DataMember(Name = "processMsg")]
+        public string ProcessMessage { get; set; }
         [DataMember(Name="trackingId")]
         public string TrackingID { get; set;}
         

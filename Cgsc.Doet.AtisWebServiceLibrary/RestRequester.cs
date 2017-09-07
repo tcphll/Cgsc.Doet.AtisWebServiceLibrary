@@ -127,6 +127,10 @@ namespace Cgsc.Doet.AtisWebServiceLibrary
                     LastRequestStatusCode = response.StatusCode;
                     
                 }
+                catch (TaskCanceledException ex)
+                {
+                    WriteErrorMessage(ex);
+                }
                 catch (Exception ex)
                 {
                     WriteErrorMessage(ex);
@@ -134,6 +138,7 @@ namespace Cgsc.Doet.AtisWebServiceLibrary
                     AtisWebServiceException atisEx = new AtisWebServiceException(ex, json, response.Headers);
                     throw atisEx;
                 }
+                
             }
             
             return json;
@@ -153,11 +158,11 @@ namespace Cgsc.Doet.AtisWebServiceLibrary
             string uri = "";
             if (cls.Count() > 0)
             {
-                uri = string.Format("classes?crs={0}&fy={1}&cls={2}", crs, fy, cls);
+                uri = string.Format("classes?crs={0}&fy={1}&cls={2}&limit=1000", crs, fy, cls);
             }
             else
             {
-                uri = string.Format("classes?crs={0}&fy={1}", crs, fy);
+                uri = string.Format("classes?crs={0}&fy={1}&limit=1000", crs, fy);
             }
             string json = await this.SendRequest(uri,HttpMethod.Get);
             AtisClasses atisClasses = (AtisClasses)AtisJsonSerializer.Deserialize<AtisClasses>(json);
@@ -168,7 +173,7 @@ namespace Cgsc.Doet.AtisWebServiceLibrary
             bool retval = false;
             foreach (AtisClass atisClass in atisClasses.AtisClassList)
             {
-                uri = string.Format("classes/{0}/enrollments?edipi={1}", atisClass.Id.ToString(), edipi);
+                uri = string.Format("classes/{0}/enrollments?edipi={1}&limit=1000", atisClass.Id.ToString(), edipi);
                 json = await this.SendRequest(uri, HttpMethod.Get);
                 if (this.LastRequestStatusCode == HttpStatusCode.OK)
                 {                   
@@ -265,6 +270,9 @@ namespace Cgsc.Doet.AtisWebServiceLibrary
                     case "N":
                         status = TransactionsStatus.New;
                         break;
+                    case "F":
+                        status = TransactionsStatus.Failed;
+                        break;
                     default:
                         status = TransactionsStatus.New;
                         break;
@@ -345,6 +353,10 @@ namespace Cgsc.Doet.AtisWebServiceLibrary
         /// <summary>
         /// Some error ocurred during processing.
         /// </summary>
-        Error = 'E'        
+        Error = 'E',        
+        /// <summary>
+        /// Some error ocurred during processing.
+        /// </summary>
+        Failed = 'F'        
     }
 }

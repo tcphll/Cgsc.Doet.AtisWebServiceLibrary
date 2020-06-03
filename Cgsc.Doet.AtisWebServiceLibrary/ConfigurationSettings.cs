@@ -118,6 +118,17 @@ namespace Cgsc.Doet.AtisWebServiceLibrary
         }
 
         /// <summary>
+        /// Certificate common name used for PKI authentication
+        /// </summary>
+        public string CertificateCommonName
+        {
+            get
+            {
+                return SecureEnvironmentConfig["CertificateCommonName"];
+            }
+        }
+
+        /// <summary>
         /// The URL of the ATIS service.
         /// </summary>
         public  string AtisServiceurl

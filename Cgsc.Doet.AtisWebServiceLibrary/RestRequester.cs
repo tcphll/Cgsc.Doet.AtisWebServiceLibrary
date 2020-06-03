@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Security.Cryptography.X509Certificates;
 //using Newtonsoft.Json;
 using System.Net.Http;
 using System.Diagnostics;
@@ -34,7 +35,12 @@ namespace Cgsc.Doet.AtisWebServiceLibrary
         /// <summary>
         /// ATIS password
         /// </summary>
+        ///
         private string Password { get; set; }
+        ///<summary>
+        ///Common name for PKI authentication. 
+        ///</summary>
+        private string CommonName { get; set; }
         /// <summary>
         /// Response headers 
         /// </summary>
@@ -83,12 +89,12 @@ namespace Cgsc.Doet.AtisWebServiceLibrary
             //dynamic attrsResponse = new AtisResponseMessage();
             string json = "";
             HttpResponseMessage response = null;
-            using (var client = new HttpClient())
+            using (var client =  ConfigureHttpClient())
             {
                 try
                 {
                     //Set up default and authentication headers
-                    ConfigureHttpClient(client);
+                    //client = ConfigureHttpClient();
 
                     
                     if (httpMethod == HttpMethod.Get)
@@ -305,17 +311,29 @@ namespace Cgsc.Doet.AtisWebServiceLibrary
         /// Configures HttpClient object 
         /// </summary>
         /// <param name="client"></param>
-        private void ConfigureHttpClient(HttpClient client)
+        private HttpClient ConfigureHttpClient()
         {
+            WebRequestHandler handler = new WebRequestHandler();
+            X509Store store = new X509Store(StoreName.My, StoreLocation.LocalMachine);
+            store.Open(OpenFlags.ReadOnly);
+            X509Certificate2Collection collection = store.Certificates.Find(X509FindType.FindBySubjectName, UserName, true);
+            handler.ClientCertificates.Add(collection[0]);
+
+            HttpClient newClient = new HttpClient(handler);
             //build client object
-            client.BaseAddress = new Uri(URL);
-            client.DefaultRequestHeaders.Accept.Clear();
-            client.DefaultRequestHeaders.Accept.Add(new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("application/json"));
-                        
+            newClient.BaseAddress = new Uri(URL);
+            newClient.DefaultRequestHeaders.Accept.Clear();
+            newClient.DefaultRequestHeaders.Accept.Add(new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("application/json"));
+            //Set up client certificate
+            
+          
+          
             //set up the authorization header
-            byte[] authorizationBytes = System.Text.Encoding.UTF8.GetBytes(String.Format("{0}:{1}", UserName, Password).ToCharArray());
-            string authorizationHeaderValue = Convert.ToBase64String(authorizationBytes);
-            client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Basic", authorizationHeaderValue);
+           // byte[] authorizationBytes = System.Text.Encoding.UTF8.GetBytes(String.Format("{0}:{1}", UserName, Password).ToCharArray());
+            //string authorizationHeaderValue = Convert.ToBase64String(authorizationBytes);
+            //newClient.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Basic", authorizationHeaderValue);
+
+            return newClient;
         }
 
         [Conditional("DEBUG")]

@@ -18,19 +18,20 @@ namespace AtisWebServiceTest
     public partial class Main : Form
     {
         //dev
-        //private const string URL = @"https://interfacestest.atsc.army.mil/transcript-ws/api/";
+        private const string URL = @"https://interfacestest.atsc.army.mil/transcript-ws/api/";
+        private const string UserName = "cgscstage.leavenworth.army.mil";
         //private const string UserName = "system_sms";
-        //private const string Password = "Sm3s1$tE*+_2014";
+        private const string Password = "Sm3s1$tE*+_2014";
         //production
-        private const string URL = @"https://interfaces.atsc.army.mil/transcript-ws/api/";
-        private const string UserName = "system_sms";
-        private const string Password = "$m$P30d_2o!5aUg";
+        //private const string URL = @"https://interfaces.atsc.army.mil/transcript-ws/api/";
+        //private const string UserName = "system_sms";
+       // private const string Password = "$m$P30d_2o!5aUg";
         public Main()
         {
             InitializeComponent();
         }
 
-        private async void  _btnSend_Click(object sender, EventArgs e)
+        private async void _btnSend_Click(object sender, EventArgs e)
         {
             try
             {
@@ -92,37 +93,37 @@ namespace AtisWebServiceTest
                     //    ReasonCode = "DW"                        
                     //}
 
-                    //new EnrollmentUpdate()
-                    //{
-                    //    EDIPI = "1237665500",
-                    //    SchoolYear = "2015",
-                    //    School = "704W",
-                    //    CourseId = "1-250-C60",
-                    //    ClassId = "007",                        
-                    //    Phase = "2",
-                    //    StatusCode = "G",
-                    //    StatusType = "3",
-                    //    StatusDate = "2015-03-25",
-                    //    TrackingID = "123321"
-                    //    //ReasonCode = "G"
-                        
-                    //},
                     new EnrollmentUpdate()
                     {
-                        StatusUpdateID = 1234,
-                        EDIPI = "111111111",
-                        SchoolYear = "2017",
-                        School = "704W",
-                        CourseId = "1-250-C60 (DL) (PI)",
+                        EDIPI = "1279897052",
+                        SchoolYear = "2019",
+                        School = "701",
+                        CourseId = "701-1-250-ILE-CC (DL)",
                         ClassId = "001",                        
-                        //Phase = "1",
-                        StatusCode = "Z",
+                        Phase = "1",
+                        StatusCode = "G",
                         StatusType = "3",
-                        StatusDate = "2017-2-7",
-                        TrackingID = "150526",
-                        ReasonCode = "HZ"
+                        StatusDate = "2019-11-12",
+                        TrackingID = "257634",
+                       // ReasonCode = "G"
                         
-                    }
+                    }//,
+                    //new EnrollmentUpdate()
+                    //{
+                    //    StatusUpdateID = 1234,
+                    //    EDIPI = "1393072098",
+                    //    SchoolYear = "2017",
+                    //    School = "704W",
+                    //    CourseId = "1-250-C60 (DL) (PI)",
+                    //    ClassId = "001",                        
+                    //    Phase = "1",
+                    //    StatusCode = "Z",
+                    //    StatusType = "3",
+                    //    StatusDate = "2017-2-7",
+                    //    TrackingID = "150526",
+                    //    ReasonCode = "HZ"
+                        
+                    //}
                 };
 
                     retType = AtisJsonSerializer.Serialize<List<EnrollmentUpdate>>(enr);
@@ -160,14 +161,14 @@ namespace AtisWebServiceTest
             {
                 _btnSend.Enabled = true;
             }
-            
+
         }
 
         private void btnDeserialize_Click(object sender, EventArgs e)
         {
             Enrollment enr = (Enrollment)AtisJsonSerializer.Deserialize<Enrollment>(txtJson.Text);
-             
-            MessageBox.Show(enr.EDIPI);            
+
+            MessageBox.Show(enr.EDIPI);
         }
     }
 }

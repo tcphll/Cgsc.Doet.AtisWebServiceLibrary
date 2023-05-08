@@ -18,12 +18,12 @@ namespace AtisWebServiceTest
     public partial class Main : Form
     {
         //dev
-        private const string URL = @"https://interfacestest.atsc.army.mil/transcript-ws/api/";
-        private const string UserName = "cgscstage.leavenworth.army.mil";
+        //private const string URL = @"https://interfacestest.atsc.army.mil/transcript-ws/api/";
+        private const string UserName = "cgsc2.leavenworth.army.mil";
         //private const string UserName = "system_sms";
         private const string Password = "Sm3s1$tE*+_2014";
         //production
-        //private const string URL = @"https://interfaces.atsc.army.mil/transcript-ws/api/";
+        private const string URL = @"https://interfaces.atsc.army.mil/transcript-ws/api/";
         //private const string UserName = "system_sms";
        // private const string Password = "$m$P30d_2o!5aUg";
         public Main()
